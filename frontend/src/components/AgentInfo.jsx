@@ -1,12 +1,21 @@
-const AgentInfo = ({ agentData }) => {
+import { useSelector } from 'react-redux';
+import { selectAgent } from '../reducers/agentReducer';
+
+const AgentInfo = () => {
+  const agent = useSelector(selectAgent);
+
   return (
     <div>
-      <h2>AGENT {agentData.symbol} </h2>
-      <p>Faction: {agentData.startingFaction}</p>
-      <p>Headquarters: {agentData.headquarters} </p>
-      <p>Credits: {agentData.credits}</p>
+      {agent.symbol && (
+        <>
+          <h2>AGENT {agent.symbol} </h2>
+          <p>Faction: {agent.startingFaction}</p>
+          <p>Headquarters: {agent.headquarters} </p>
+          <p>Credits: {agent.credits}</p>
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default AgentInfo
+export default AgentInfo;

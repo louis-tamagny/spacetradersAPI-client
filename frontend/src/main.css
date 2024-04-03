@@ -76,8 +76,8 @@ body {
 #waypoint-description {
   flex: 1;
   padding: 1em;
-  display: flex;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .ship-icon {
@@ -127,4 +127,35 @@ button:hover {
   min-height: none;
   margin-left: 1rem;
   margin-right: 1rem;
+}
+
+input {
+  color: #55ffff;
+  background-color: #000a12;
+  border: none;
+  border-bottom: 1px solid #55ffff;
+}
+
+.circle {
+  width: 5px;
+  height: 5px;
+  background: #ff5555;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  margin: auto;
+  animation: circle 3s linear infinite;
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(0deg) translate(-10px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translate(-10px) rotate(-360deg);
+  }
 }
