@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getSystemWaypoint = async (system = 'X1-YT23', trait = '') => {
+const getSystemWaypoint = async (system, trait = '') => {
   const response = await axios.get(
     `http://localhost:3001/systems/${system}/waypoints/${trait}`
   );

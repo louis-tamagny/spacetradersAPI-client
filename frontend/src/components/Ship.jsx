@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   makeShipAutoExtract,
   makeShipDock,
@@ -12,12 +12,30 @@ import {
 } from '../services/ship';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectActiveShip, updateActiveShip } from '../reducers/shipsReducer';
-import { updateAgent, updateContract } from '../reducers/agentReducer';
+import {
+  selectContracts,
+  updateAgent,
+  updateContract,
+} from '../reducers/agentReducer';
+import { selectActiveWaypoint } from '../reducers/systemReducer';
 
 const Ship = () => {
   const ship = useSelector(selectActiveShip);
   const [destination, setDestination] = useState('');
+  const [autoextractItem, setAutoextractItem] = useState('');
+  const activeWaypoint = useSelector(selectActiveWaypoint);
+  const contracts = useSelector(selectContracts);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setDestination(activeWaypoint.symbol || '');
+  }, [activeWaypoint]);
+
+  useEffect(() => {
+    setAutoextractItem(
+      contracts[0] ? contracts[0].terms.deliver[0].tradeSymbol : ''
+    );
+  }, [contracts]);
 
   const handleExtract = (event) => {
     event.preventDefault();
@@ -25,7 +43,7 @@ const Ship = () => {
   };
   const handleAutoExtract = (event) => {
     event.preventDefault();
-    makeShipAutoExtract(ship.symbol);
+    makeShipAutoExtract(ship.symbol, autoextractItem);
   };
   const handleOrbit = async (event) => {
     event.preventDefault();
@@ -47,11 +65,6 @@ const Ship = () => {
   const handleMoveShipTo = (event) => {
     event.preventDefault();
     moveShipTo(ship.symbol, destination);
-  };
-
-  const handleChangeDestination = (event) => {
-    event.preventDefault();
-    setDestination(event.target.value);
   };
 
   const handleSell = (event, itemSymbol, units) => {
@@ -144,18 +157,24 @@ const Ship = () => {
             <button onClick={handleRefuel}>Refuel</button>
             <button onClick={(event) => handleExtract(event)}>Extract</button>
             <button onClick={(event) => handleAutoExtract(event)}>
-              Autoextract --
+              Autoextract item:
             </button>
-            <input type='text'></input>
-
             <input
               type='text'
-              onChange={handleChangeDestination}
+              value={autoextractItem}
+              onChange={(e) => setAutoextractItem(e.target.value)}
             ></input>
+            <div></div>
+
             <button onClick={(event) => handleMoveShipTo(event)}>
               {' '}
-              -- Navigate
+              Navigate to:
             </button>
+            <input
+              type='text'
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+            ></input>
           </div>
         </>
       )}

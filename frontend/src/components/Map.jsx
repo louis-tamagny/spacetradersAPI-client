@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react';
-import { getSystemWaypoint } from '../services/system';
-import Waypoint from './Waypoint';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectActiveWaypoint,
   selectWaypoints,
-  setWaypoints,
   setActiveWaypoint,
 } from '../reducers/systemReducer';
 import { selectActiveShip, selectShips } from '../reducers/shipsReducer';
@@ -14,16 +11,11 @@ const Map = () => {
   const waypoints = useSelector(selectWaypoints);
   const activeWaypoint = useSelector(selectActiveWaypoint);
   const ships = useSelector(selectShips);
+  const activeShip = useSelector(selectActiveShip);
   const [waypointFilter, setWaypointFilter] = useState('');
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    getSystemWaypoint().then((res) => {
-      dispatch(setWaypoints(res));
-    });
-  }, []);
-
-  if (waypoints.length === 0) {
+  if (!waypoints) {
     return <div>loading...</div>;
   }
 
@@ -57,7 +49,18 @@ const Map = () => {
               >
                 {ships.some(
                   (ship) => ship.nav.waypointSymbol === waypoint.symbol
-                ) && <div className='circle'></div>}
+                ) && (
+                  <div
+                    className='circle'
+                    style={{
+                      backgroundColor:
+                        activeShip.symbol &&
+                        waypoint.symbol === activeShip.nav.waypointSymbol
+                          ? 'red'
+                          : 'white',
+                    }}
+                  ></div>
+                )}
               </div>
             ))}
         </div>

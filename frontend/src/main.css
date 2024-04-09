@@ -65,12 +65,15 @@ body {
 #map .waypoint {
   position: absolute;
   border: 1px solid white;
-  height: 5px;
-  width: 5px;
+  background-color: white;
+  height: 3px;
+  width: 3px;
+  border-radius: 50%;
   transition: 0.5s ease;
 }
 #map .waypoint:hover {
-  background-color: white;
+  transform: scale(300%);
+  background-color: #ff5555;
 }
 
 #waypoint-description {

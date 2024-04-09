@@ -1,18 +1,9 @@
-import { useState } from 'react';
-import Ship from './Ship';
-import { getAgentShips } from '../services/agent';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectShips, setActiveShip, setShips } from '../reducers/shipsReducer';
+import { selectShips, setActiveShip } from '../reducers/shipsReducer';
 
 const ShipList = () => {
   const ships = useSelector(selectShips);
   const dispatch = useDispatch();
-
-  useState(() => {
-    getAgentShips().then((res) => {
-      dispatch(setShips(res));
-    });
-  }, []);
 
   const iconTable = {
     ['COMMAND']: '../../ressources/icons/rocket.png',
@@ -20,7 +11,7 @@ const ShipList = () => {
     ['EXCAVATOR']: '../../ressources/icons/satellite.png',
   };
 
-  if (ships.length === 0) {
+  if (!ships) {
     return <div>loading...</div>;
   }
 

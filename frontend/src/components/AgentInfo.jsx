@@ -1,12 +1,13 @@
-import { useSelector } from 'react-redux';
-import { selectAgent } from '../reducers/agentReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { initalizeAgentData, selectAgent } from '../reducers/agentReducer';
+import { useEffect } from 'react';
 
 const AgentInfo = () => {
   const agent = useSelector(selectAgent);
 
   return (
     <div>
-      {agent.symbol && (
+      {agent && agent.symbol && (
         <>
           <h2>AGENT {agent.symbol} </h2>
           <p>Faction: {agent.startingFaction}</p>

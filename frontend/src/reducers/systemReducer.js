@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getSystemWaypoint } from '../services/system';
 
 const systemReducer = createSlice({
   name: 'system',
@@ -31,7 +32,15 @@ const systemReducer = createSlice({
   },
 });
 
+export const initialiseSystem = (systemSymbol) => async (dispatch) => {
+  const systemData = await getSystemWaypoint(systemSymbol);
+  dispatch(setSystemName(systemData[0].systemSymbol));
+  dispatch(setWaypoints(systemData));
+  dispatch(setActiveWaypoint(systemData[0]));
+};
+
 export const { selectWaypoints, selectActiveWaypoint } =
   systemReducer.selectors;
-export const { setWaypoints, setActiveWaypoint } = systemReducer.actions;
+export const { setWaypoints, setActiveWaypoint, setSystemName } =
+  systemReducer.actions;
 export default systemReducer.reducer;

@@ -6,24 +6,21 @@ import AgentInfo from './components/AgentInfo';
 import ShipList from './components/ShipList';
 import ContractsInfo from './components/ContractsInfo';
 import Waypoint from './components/Waypoint';
+import { useDispatch } from 'react-redux';
+import { initialiseAll } from './reducers/thunks';
 
 const App = () => {
-  const [agentData, setAgentData] = useState(null);
-  const [ships, setShips] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getAgentData().then((res) => setAgentData(res));
-    getAgentShips().then((res) => setShips(res));
+    dispatch(initialiseAll('X1-YT23')).then((res) => setLoaded(res));
   }, []);
-
-  if (!agentData) {
-    return <div>loading...</div>;
-  }
 
   return (
     <div className='container'>
       <div>
-        <AgentInfo agentData={agentData} />
+        <AgentInfo />
         <ContractsInfo />
       </div>
       <div>

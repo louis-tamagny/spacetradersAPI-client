@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getAgentShips } from '../services/agent';
 
 const shipsReducer = createSlice({
   name: 'ships',
@@ -32,6 +33,13 @@ const shipsReducer = createSlice({
     },
   },
 });
+
+//Thunk function do fetch the list of ships and dispatch it to the store
+export const initialiseShips = () => async (dispatch) => {
+  const data = await getAgentShips();
+  dispatch(setShips(data));
+  dispatch(setActiveShip(data[0]));
+};
 
 export const { selectActiveShip, selectShips } = shipsReducer.selectors;
 export const { setShips, setActiveShip, updateActiveShip } =
