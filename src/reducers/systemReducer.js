@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getSystemWaypoint } from '../services/system';
+import { getSystemAllWaypoints } from '../services/system';
 
 const systemReducer = createSlice({
   name: 'system',
@@ -19,7 +19,8 @@ const systemReducer = createSlice({
       state.activeWaypoint = payload;
     },
     clear(state) {
-      state = initialState;
+      // eslint-disable-next-line no-unused-vars
+      state = systemReducer.initialState;
     },
   },
   selectors: {
@@ -33,7 +34,7 @@ const systemReducer = createSlice({
 });
 
 export const initialiseSystem = (systemSymbol) => async (dispatch) => {
-  const systemData = await getSystemWaypoint(systemSymbol);
+  const systemData = await getSystemAllWaypoints(systemSymbol);
   dispatch(setSystemName(systemData[0].systemSymbol));
   dispatch(setWaypoints(systemData));
   dispatch(setActiveWaypoint(systemData[0]));

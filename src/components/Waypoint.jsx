@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getMarketplaceData } from '../services/system';
+import { getMarketPlaceData } from '../services/system';
 import { useSelector } from 'react-redux';
 import { selectActiveWaypoint } from '../reducers/systemReducer';
 
@@ -9,7 +9,7 @@ const Waypoint = () => {
 
   useEffect(() => {
     if (waypoint.traits?.some((trait) => trait.symbol === 'MARKETPLACE')) {
-      getMarketplaceData(waypoint.symbol).then((res) => setMarketPlace(res));
+      getMarketPlaceData(waypoint.symbol).then((res) => setMarketPlace(res));
     } else {
       setMarketPlace(null);
     }

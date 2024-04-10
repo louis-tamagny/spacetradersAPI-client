@@ -15,7 +15,7 @@ const Map = () => {
   const [waypointFilter, setWaypointFilter] = useState('');
   const dispatch = useDispatch();
 
-  if (!waypoints) {
+  if (!waypoints || !Array.isArray(waypoints)) {
     return <div>loading...</div>;
   }
 
@@ -47,20 +47,22 @@ const Map = () => {
                   dispatch(setActiveWaypoint(waypoint));
                 }}
               >
-                {ships.some(
-                  (ship) => ship.nav.waypointSymbol === waypoint.symbol
-                ) && (
-                  <div
-                    className='circle'
-                    style={{
-                      backgroundColor:
-                        activeShip.symbol &&
-                        waypoint.symbol === activeShip.nav.waypointSymbol
-                          ? 'red'
-                          : 'white',
-                    }}
-                  ></div>
-                )}
+                {ships &&
+                  Array.isArray(ships) &&
+                  ships.some(
+                    (ship) => ship.nav.waypointSymbol === waypoint.symbol
+                  ) && (
+                    <div
+                      className='circle'
+                      style={{
+                        backgroundColor:
+                          activeShip.symbol &&
+                          waypoint.symbol === activeShip.nav.waypointSymbol
+                            ? 'red'
+                            : 'white',
+                      }}
+                    ></div>
+                  )}
               </div>
             ))}
         </div>

@@ -94,6 +94,10 @@ const Ship = () => {
     dispatch(updateContract(data.contract));
   };
 
+  if (!ship) {
+    return <div>loading...</div>;
+  }
+
   return (
     <div>
       {ship.symbol && (

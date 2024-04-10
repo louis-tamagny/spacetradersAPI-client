@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getAgentData, getAgentShips } from './services/agent';
 import Ship from './components/Ship';
 import Map from './components/Map';
 import AgentInfo from './components/AgentInfo';
@@ -14,7 +13,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initialiseAll('X1-YT23')).then((res) => setLoaded(res));
+    dispatch(initialiseAll('X1-AK75')).then((res) => setLoaded(res));
   }, []);
 
   return (

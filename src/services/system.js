@@ -1,10 +1,4 @@
-require('dotenv').config();
-
-const headers = {
-  Authorization: 'Bearer ' + process.env.TOKEN,
-  'Content-Type': 'application/json',
-};
-
+import { headers } from './constants';
 const baseURL = 'https://api.spacetraders.io/v2/systems/';
 
 const getSystemWaypoints = async (system, trait, page = 1) => {
@@ -48,12 +42,8 @@ const getMarketPlaceData = async (system, waypoint) => {
     `${baseURL}${system}/waypoints/${waypoint}/market`,
     options
   );
-  const data = await response.json();
-  return data;
+  const marketPlace = await response.json();
+  return marketPlace.data;
 };
 
-module.exports = {
-  getSystemWaypoints,
-  getMarketPlaceData,
-  getSystemAllWaypoints,
-};
+export { getSystemWaypoints, getSystemAllWaypoints, getMarketPlaceData };

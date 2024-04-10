@@ -1,9 +1,4 @@
-require('dotenv').config();
-
-const headers = {
-  Authorization: 'Bearer ' + process.env.TOKEN,
-  'Content-Type': 'application/json',
-};
+import { headers } from './constants';
 
 const baseURL = 'https://api.spacetraders.io/v2/my/ships/';
 
@@ -14,7 +9,7 @@ const makeShipExtract = async (shipSymbol) => {
   };
   const response = await fetch(baseURL + shipSymbol + '/extract', options);
   const agentData = await response.json();
-  return agentData;
+  return agentData.data;
 };
 
 const makeShipAutoExtract = async (shipSymbol, itemSymbols) => {
@@ -58,7 +53,7 @@ const makeShipDock = async (shipSymbol) => {
   };
   const response = await fetch(baseURL + shipSymbol + '/dock', options);
   const agentData = await response.json();
-  return agentData;
+  return agentData.data;
 };
 
 const makeShipOrbit = async (shipSymbol) => {
@@ -68,7 +63,7 @@ const makeShipOrbit = async (shipSymbol) => {
   };
   const response = await fetch(baseURL + shipSymbol + '/orbit', options);
   const agentData = await response.json();
-  return agentData;
+  return agentData.data;
 };
 
 const moveShipTo = async (shipSymbol, waypointSymbol) => {
@@ -79,7 +74,7 @@ const moveShipTo = async (shipSymbol, waypointSymbol) => {
   };
   const response = await fetch(baseURL + shipSymbol + '/navigate', options);
   const shipData = await response.json();
-  return shipData;
+  return shipData.data;
 };
 
 const makeShipRefuel = async (shipSymbol) => {
@@ -89,7 +84,7 @@ const makeShipRefuel = async (shipSymbol) => {
   };
   const response = await fetch(baseURL + shipSymbol + '/refuel', options);
   const agentData = await response.json();
-  return agentData;
+  return agentData.data;
 };
 
 const makeShipSell = async (shipSymbol, itemSymbol, units) => {
@@ -100,7 +95,7 @@ const makeShipSell = async (shipSymbol, itemSymbol, units) => {
   };
   const response = await fetch(baseURL + shipSymbol + '/sell', options);
   const shipData = await response.json();
-  return shipData;
+  return shipData.data;
 };
 
 const makeShipJettison = async (shipSymbol, itemSymbol, units) => {
@@ -111,7 +106,7 @@ const makeShipJettison = async (shipSymbol, itemSymbol, units) => {
   };
   const response = await fetch(baseURL + shipSymbol + '/jettison', options);
   const shipData = await response.json();
-  return shipData;
+  return shipData.data;
 };
 
 const makeShipDeliverForContract = async (
@@ -134,10 +129,9 @@ const makeShipDeliverForContract = async (
     options
   );
   const shipData = await response.json();
-  return shipData;
+  return shipData.data;
 };
-
-module.exports = {
+export {
   makeShipExtract,
   makeShipAutoExtract,
   makeShipDock,
